@@ -8,8 +8,9 @@ const Router = express.Router();
 const limiter = rateLimit({
     windowMs: 60 * 60 * 1000,
     max: 10,
-    message: {
-        error: "Too many shortened URLs created from your IP, please try again after an hour!"
+    message: (req, res) => {
+        const remainingTime = (Date.parse(res.req.rateLimit.resetTime) - Date.now()) / 1000;
+        return { error: `Too many shortened URLs created from your IP, please try again after ${formatSeconds(Math.round(remainingTime))}!` };
     },
     standardHeaders: true,
     legacyHeaders: false
@@ -63,5 +64,23 @@ Router.use((req, res) => {
         error: "404 Not Found!"
     });
 });
+
+// Seconds to readable text formatter
+function formatSeconds(totalSeconds) {
+    if (totalSeconds < 60) {
+        return totalSeconds + " second" + (totalSeconds !== 1 ? "s" : "");
+    }
+
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+
+    return (
+        minutes +
+        " minute" + (minutes !== 1 ? "s" : "") +
+        " and " +
+        seconds +
+        " second" + (seconds !== 1 ? "s" : "")
+    );
+}
 
 export default Router;
