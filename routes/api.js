@@ -2,6 +2,7 @@ import express from "express";
 import rateLimit from "express-rate-limit";
 import shortenController from "../controllers/shorten.js";
 import Link from "../models/link.js";
+import formatSeconds from "../utils/seconds.js";
 
 const Router = express.Router();
 
@@ -64,23 +65,5 @@ Router.use((req, res) => {
         error: "404 Not Found!"
     });
 });
-
-// Seconds to readable text formatter
-function formatSeconds(totalSeconds) {
-    if (totalSeconds < 60) {
-        return totalSeconds + " second" + (totalSeconds !== 1 ? "s" : "");
-    }
-
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-
-    return (
-        minutes +
-        " minute" + (minutes !== 1 ? "s" : "") +
-        " and " +
-        seconds +
-        " second" + (seconds !== 1 ? "s" : "")
-    );
-}
 
 export default Router;
