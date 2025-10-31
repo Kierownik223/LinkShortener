@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 const ID_LENGTH = parseInt(process.env.ID_LENGTH) || 4;
 const PROTOCOLS = ["http:", "https:"];
 const SERVER_HOST = process.env.SERVER_HOST || "127.0.0.1";
+const BLOCKED_DOMAINS = process.env.BLOCKED_DOMAINS || [];
 const SERVER_URL = process.env.SERVER_URL || "http://127.0.0.1:8000/";
 
 async function newID() {
@@ -37,6 +38,9 @@ function isValidURL(url) {
             return false;
 
         if (SERVER_HOST == urlObj.hostname)
+            return false;
+
+        if (BLOCKED_DOMAINS.includes(urlObj.hostname))
             return false;
         
         return true;
