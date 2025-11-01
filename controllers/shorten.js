@@ -6,7 +6,7 @@ const PROTOCOLS = ["http:", "https:"];
 const SERVER_HOST = process.env.SERVER_HOST || "127.0.0.1";
 const BLOCKED_DOMAINS = process.env.BLOCKED_DOMAINS || [];
 const SERVER_URL = process.env.SERVER_URL || "http://127.0.0.1:8000/";
-const ALIASES = process.env.ALIASES ? JSON.parse(process.env.ALIASES) : ["http://127.0.0.1:8000"];
+const ALIASES = process.env.ALIASES ? JSON.parse(process.env.ALIASES) : [];
 
 async function newID() {
     let id, obj;
@@ -80,7 +80,7 @@ export default (req, res) => {
         });
     }
 
-    var base = SERVER_URL;
+    let base = SERVER_URL;
 
     if (req.body.alias) 
         if (ALIASES.includes(req.body.alias))
