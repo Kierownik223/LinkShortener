@@ -2,6 +2,7 @@ const shortenForm = document.querySelector(".shorten-form");
 const urlElement = document.querySelector("#url");
 const errorElement = document.querySelector(".error");
 const linkElement = document.querySelector(".link");
+const baseUrlElement = document.querySelector("#base");
 
 function showLink(link) {
     errorElement.setAttribute("style", "display: none;");
@@ -24,6 +25,7 @@ function showError(error) {
 shortenForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const url = urlElement.value;
+    const base = baseUrlElement.value;
     urlElement.value = "";
 
     if (!url) return;
@@ -37,7 +39,8 @@ shortenForm.addEventListener("submit", async (event) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                url
+                url,
+                alias: base,
             })
         });
 

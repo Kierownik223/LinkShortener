@@ -6,6 +6,7 @@ const PROTOCOLS = ["http:", "https:"];
 const SERVER_HOST = process.env.SERVER_HOST || "127.0.0.1";
 const BLOCKED_DOMAINS = process.env.BLOCKED_DOMAINS || [];
 const SERVER_URL = process.env.SERVER_URL || "http://127.0.0.1:8000/";
+const ALIASES = process.env.ALIASES ? JSON.parse(process.env.ALIASES) : ["http://127.0.0.1:8000"];
 
 async function newID() {
     let id, obj;
@@ -42,6 +43,9 @@ function isValidURL(url) {
 
         if (BLOCKED_DOMAINS.includes(urlObj.hostname))
             return false;
+
+        if (ALIASES.includes(`http://${urlObj.hostname}`) || ALIASES.includes(`https://${urlObj.hostname}`))
+            return false;
         
         return true;
     } catch (_) {
@@ -76,9 +80,15 @@ export default (req, res) => {
         });
     }
 
+    var base = SERVER_URL;
+
+    if (req.body.alias) 
+        if (ALIASES.includes(req.body.alias))
+            base = req.body.alias;
+
     newShortenedURL(url).then((id) => {
         res.json({
-            link: SERVER_URL + id
+            link: base + id
         });
     });
 };
