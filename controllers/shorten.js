@@ -32,6 +32,8 @@ function isValidURL(url) {
     try {
         const urlObj = new URL(url);
 
+        console.log(urlObj.hostname);
+
         if (!PROTOCOLS.includes(urlObj.protocol))
             return false;
         
@@ -44,7 +46,7 @@ function isValidURL(url) {
         if (BLOCKED_DOMAINS.includes(urlObj.hostname))
             return false;
 
-        if (ALIASES.includes(`http://${urlObj.hostname}`) || ALIASES.includes(`https://${urlObj.hostname}`))
+        if (ALIASES.includes(`http://${urlObj.hostname}/`) || ALIASES.includes(`https://${urlObj.hostname}/`))
             return false;
         
         return true;
