@@ -32,8 +32,6 @@ function isValidURL(url) {
     try {
         const urlObj = new URL(url);
 
-        console.log(urlObj.hostname);
-
         if (!PROTOCOLS.includes(urlObj.protocol))
             return false;
         
