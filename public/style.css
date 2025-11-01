@@ -9,6 +9,19 @@
     --link: #ffffff;
 }
 
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #000000;
+        --bg-secondary: #202020;
+        --text: #ffffff;
+        --input: #484848;
+        --input-hover: #303030;
+        --error: #e90000;
+        --success: #adff2f;
+        --link: #f4f4f4;
+    }
+}
+
 body {
     margin: 0;
     color: var(--text);
@@ -42,6 +55,7 @@ input, select {
     font-size: 16px;
     border-radius: 5px;
     background-color: var(--input);
+    color: var(--text);
 }
 
 input[type="submit"] {
