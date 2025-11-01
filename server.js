@@ -13,6 +13,8 @@ const app = express();
 
 app.locals.version = process.env.npm_package_version || "1.0";
 app.locals.abuseURL = process.env.ABUSE_URL || "mailto:mail@example.com";
+app.locals.serverUrl = process.env.SERVER_URL || "http://127.0.0.1:8000";
+app.locals.aliases = process.env.ALIASES ? JSON.parse(process.env.ALIASES) : ["http://127.0.0.1:8000"];
 
 // Setup view engine
 app.set("views", "views");

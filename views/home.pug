@@ -20,6 +20,10 @@ html(lang="en")
 
             form(class="shorten-form")
                 input(type="url", name="url", id="url" placeholder="Paste your URL here!")
+                select(name="base") 
+                    option(value=serverUrl) #{serverUrl}
+                    each url in locals.aliases
+                        option(value=url) #{url}
                 input(type="submit", value="Generate new, shortened link!")
 
             div.about
